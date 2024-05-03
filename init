@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+if ! (return 0 2>/dev/null); then
+	echo "Error: this script should be sourced, rather than executed." >&2
+	exit 1
+fi
+
+if ! command -v python3 &> /dev/null; then
+	echo "Error: python3 is not installed." >&2
+	return 1
+fi
+
+set -x
+
+# Initialize the virtual environment
+python3 -m venv .venv
+source .venv/bin/activate
+
+# Install the required packages
+pip install -r requirements.txt
+
+set +x

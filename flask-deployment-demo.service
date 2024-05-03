@@ -1,0 +1,15 @@
+[Unit]
+Description=flask-deployment-demo
+After=syslog.target network.target
+
+[Service]
+Type=simple
+# Run on port 80 so that the host web server can pick it up.
+# If you want to run more than 1 web application, you will want to look into
+# using a reverse proxy like Caddy (recommended) or NGINX.
+ExecStart=/etc/flask-deployment-demo/.venv/bin/gunicorn -b :80 api:app
+# Set the working directory so that Python and virtualenv can work happily.
+WorkingDirectory=/etc/flask-deployment-demo
+
+[Install]
+WantedBy=multi-user.target
